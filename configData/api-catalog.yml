@@ -7,6 +7,9 @@ spring:
     config:
       url: ${CONFIG_SERVER:http://localhost:8888}
 eureka:
+  instance:
+     hostname: localhost
+     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     registerWithEureka: true
     fetchRegistry: true
