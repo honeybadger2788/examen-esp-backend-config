@@ -5,7 +5,7 @@ spring:
     name: api-catalog
   cloud:
     config:
-      url: ${CONFIG_SERVER:http://localhost:8890}
+      url: ${CONFIG_SERVER:http://localhost:8888}
 eureka:
   client:
     registerWithEureka: true
