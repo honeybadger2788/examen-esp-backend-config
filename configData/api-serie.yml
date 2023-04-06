@@ -6,7 +6,8 @@ spring:
   data:
     mongodb:
       database: test
-      uri: mongodb://localhost:27017
+      port: 27017
+      host: localhost
 eureka:
   instance:
      hostname: localhost
