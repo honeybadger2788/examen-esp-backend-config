@@ -8,6 +8,8 @@ spring:
       database: test
       port: 27017
       host: localhost
+  zipkin:
+    baseUrl: http://localhost:9411/
 eureka:
   healthcheck:
       enabled: true

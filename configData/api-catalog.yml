@@ -8,6 +8,9 @@ spring:
       database: catalog
       port: 27017
       host: localhost
+  zipkin:
+    baseUrl: http://localhost:9411/
+    
 eureka:
   instance:
      hostname: localhost
