@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: api-catalog
+  data:
+    mongodb:
+      database: catalog
+      port: 27017
+      host: localhost
 eureka:
   instance:
      hostname: localhost
