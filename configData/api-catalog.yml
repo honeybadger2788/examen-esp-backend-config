@@ -26,8 +26,7 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-resilience4j:
-  circuitbreaker:
+resilience4j.circuitbreaker:
     instances:
       series:
         slidingWindowType: COUNT_BASED
@@ -47,7 +46,7 @@ resilience4j:
         slidingWindowSize: '10'
         permittedNumberOfCallsInHalfOpenState: '3'
         waitDurationInOpenState: '15000'
-  retry:
+  resilience4j.retry:
     instances:
       series:
         maxAttempts: '3'
