@@ -13,6 +13,8 @@ spring:
     generate-ddl: true
     show-sql: true
 eureka:
+  healthcheck:
+      enabled: true
   instance:
      hostname: localhost
      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
