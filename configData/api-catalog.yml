@@ -8,9 +8,14 @@ spring:
       database: catalog
       port: 27017
       host: localhost
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
   zipkin:
     baseUrl: http://localhost:9411/
-    
+
 eureka:
   instance:
      hostname: localhost
@@ -23,8 +28,8 @@ eureka:
 
 resilience4j:
   circuitbreaker:
-    configs:
-      default:
+    instances:
+      series:
         slidingWindowType: COUNT_BASED
         failureRateThreshold: '40'
         automaticTransitionFromOpenToHalfOpenEnabled: 'true'
@@ -33,19 +38,22 @@ resilience4j:
         slidingWindowSize: '10'
         permittedNumberOfCallsInHalfOpenState: '3'
         waitDurationInOpenState: '15000'
+      movies:
+        slidingWindowType: COUNT_BASED
+        failureRateThreshold: '40'
+        automaticTransitionFromOpenToHalfOpenEnabled: 'true'
+        allowHealthIndicatorToFail: 'false'
+        registerHealthIndicator: 'true'
+        slidingWindowSize: '10'
+        permittedNumberOfCallsInHalfOpenState: '3'
+        waitDurationInOpenState: '15000'
+  retry:
     instances:
       series:
-        base-config: default
-      movies:
-        base-config: default
-  retry:
-    configs:
-      default:
         maxAttempts: '3'
         waitDuration: '1000'
         retryExceptions[0]: feign.FeignException$InternalServerError
-    instances:
-      series:
-        base-config: default
       movies:
-        base-config: default
+        maxAttempts: '3'
+        waitDuration: '1000'
+        retryExceptions[0]: feign.FeignException$InternalServerError

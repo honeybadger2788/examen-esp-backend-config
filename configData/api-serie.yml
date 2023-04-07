@@ -8,6 +8,11 @@ spring:
       database: test
       port: 27017
       host: localhost
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
   zipkin:
     baseUrl: http://localhost:9411/
 eureka:
