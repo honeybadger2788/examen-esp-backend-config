@@ -20,32 +20,29 @@ eureka:
 
 resilience4j:
   circuitbreaker:
+    configs:
+      default:
+        slidingWindowType: COUNT_BASED
+        failureRateThreshold: '40'
+        automaticTransitionFromOpenToHalfOpenEnabled: 'true'
+        allowHealthIndicatorToFail: 'false'
+        registerHealthIndicator: 'true'
+        slidingWindowSize: '10'
+        permittedNumberOfCallsInHalfOpenState: '3'
+        waitDurationInOpenState: '15000'
     instances:
       series:
-        slidingWindowType: COUNT_BASED
-        failureRateThreshold: '40'
-        automaticTransitionFromOpenToHalfOpenEnabled: 'true'
-        allowHealthIndicatorToFail: 'false'
-        registerHealthIndicator: 'true'
-        slidingWindowSize: '10'
-        permittedNumberOfCallsInHalfOpenState: '3'
-        waitDurationInOpenState: '15000'
+        base-config: default
       movies:
-        slidingWindowType: COUNT_BASED
-        failureRateThreshold: '40'
-        automaticTransitionFromOpenToHalfOpenEnabled: 'true'
-        allowHealthIndicatorToFail: 'false'
-        registerHealthIndicator: 'true'
-        slidingWindowSize: '10'
-        permittedNumberOfCallsInHalfOpenState: '3'
-        waitDurationInOpenState: '15000'
+        base-config: default
   retry:
+    configs:
+      default:
+        maxAttempts: '3'
+        waitDuration: '1000'
+        retryExceptions[0]: feign.FeignException$InternalServerError
     instances:
-      movies:
-        maxAttempts: '3'
-        waitDuration: '1000'
-        retryExceptions[0]: feign.FeignException$InternalServerError
       series:
-        maxAttempts: '3'
-        waitDuration: '1000'
-        retryExceptions[0]: feign.FeignException$InternalServerError
+        base-config: default
+      movies:
+        base-config: default
