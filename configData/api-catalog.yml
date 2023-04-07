@@ -19,35 +19,20 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 resilience4j:
-  retry:
-    configs:
-      default:
-        max-retry-attempts: 3
-        wait-duration: 1s
-        retry-exceptions:
-          - java.io.IOException
-          - java.net.SocketTimeoutException
-      instances:
-        retryInscription:
-          base-config: default
-          max-retry-attempts: 5
-          wait-duration: 2s
-          retry-exceptions:
-            - java.net.ConnectException
   circuitbreaker:
-    configs:
-      default:
-        register-health-indicator: true
-        sliding-window-size: 10
-        minimum-number-of-calls: 5
-        permitted-number-of-calls-in-half-open-state: 3
-        wait-duration-in-open-state: 30s
-        automatic-transition-from-open-to-half-open-enabled: true
-        failure-rate-threshold: 50
     instances:
-      clientInscription:
-        base-config: default
-        sliding-window-type: COUNT_BASED
-        sliding-window-size: 5
-        wait-duration-in-open-state: 1m
-        failure-rate-threshold: 20
+      catalog:
+        slidingWindowType: COUNT_BASED
+        failureRateThreshold: '40'
+        automaticTransitionFromOpenToHalfOpenEnabled: 'true'
+        allowHealthIndicatorToFail: 'false'
+        registerHealthIndicator: 'true'
+        slidingWindowSize: '10'
+        permittedNumberOfCallsInHalfOpenState: '3'
+        waitDurationInOpenState: '15000'
+  retry:
+    instances:
+      catalog:
+        maxAttempts: '3'
+        waitDuration: '1000'
+        retryExceptions[0]: feign.FeignException$InternalServerError
