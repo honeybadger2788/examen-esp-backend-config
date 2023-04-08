@@ -31,7 +31,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: circuitbreakers, cicuitbreakersevents, health, info, ratelimiters, metrics
+        include: circuitbreakers, circuitbreakerevents, health, info, ratelimiters, metrics
     health:
       show-details: always
   health:
