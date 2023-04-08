@@ -27,11 +27,30 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: circuitbreakers, cicuitbreakersevents, health, info, ratelimiters, metrics
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enable: true
 
 resilience4j:
   circuitbreaker:
     instances:
-      catalog:
+      series:
+        slidingWindowType: COUNT_BASED
+        failureRateThreshold: '50'
+        automaticTransitionFromOpenToHalfOpenEnabled: 'true'
+        allowHealthIndicatorToFail: 'false'
+        registerHealthIndicator: 'true'
+        slidingWindowSize: '5'
+        permittedNumberOfCallsInHalfOpenState: '3'
+        waitDurationInOpenState: '15000'
+      movies:
         slidingWindowType: COUNT_BASED
         failureRateThreshold: '50'
         automaticTransitionFromOpenToHalfOpenEnabled: 'true'
@@ -43,7 +62,11 @@ resilience4j:
 
   retry:
     instances:
-      catalog:
+      series:
+        maxAttempts: '3'
+        waitDuration: '1000'
+        retryExceptions[0]: feign.FeignException$InternalServerError
+      movies:
         maxAttempts: '3'
         waitDuration: '1000'
         retryExceptions[0]: feign.FeignException$InternalServerError
