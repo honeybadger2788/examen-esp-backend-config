@@ -17,6 +17,8 @@ spring:
     baseUrl: http://localhost:9411/
 
 eureka:
+  healthcheck:
+    enabled: true
   instance:
      hostname: localhost
      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
@@ -38,6 +40,7 @@ resilience4j:
         slidingWindowSize: '10'
         permittedNumberOfCallsInHalfOpenState: '3'
         waitDurationInOpenState: '15000'
+        registerHealthIndicator: true
 
   retry:
     instances:
