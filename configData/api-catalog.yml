@@ -33,11 +33,11 @@ resilience4j:
     instances:
       catalog:
         slidingWindowType: COUNT_BASED
-        failureRateThreshold: '40'
+        failureRateThreshold: '50'
         automaticTransitionFromOpenToHalfOpenEnabled: 'true'
         allowHealthIndicatorToFail: 'false'
         registerHealthIndicator: 'true'
-        slidingWindowSize: '10'
+        slidingWindowSize: '5'
         permittedNumberOfCallsInHalfOpenState: '3'
         waitDurationInOpenState: '15000'
 
