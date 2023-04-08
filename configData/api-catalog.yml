@@ -40,33 +40,30 @@ management:
 
 resilience4j:
   circuitbreaker:
+    configs:
+      default:
+        slidingWindowType: COUNT_BASED
+        failureRateThreshold: '50'
+        automaticTransitionFromOpenToHalfOpenEnabled: 'true'
+        allowHealthIndicatorToFail: 'false'
+        registerHealthIndicator: 'true'
+        slidingWindowSize: '5'
+        permittedNumberOfCallsInHalfOpenState: '3'
+        waitDurationInOpenState: '15000'
     instances:
       series:
-        slidingWindowType: COUNT_BASED
-        failureRateThreshold: '50'
-        automaticTransitionFromOpenToHalfOpenEnabled: 'true'
-        allowHealthIndicatorToFail: 'false'
-        registerHealthIndicator: 'true'
-        slidingWindowSize: '5'
-        permittedNumberOfCallsInHalfOpenState: '3'
-        waitDurationInOpenState: '15000'
+        baseConfig: default
       movies:
-        slidingWindowType: COUNT_BASED
-        failureRateThreshold: '50'
-        automaticTransitionFromOpenToHalfOpenEnabled: 'true'
-        allowHealthIndicatorToFail: 'false'
-        registerHealthIndicator: 'true'
-        slidingWindowSize: '5'
-        permittedNumberOfCallsInHalfOpenState: '3'
-        waitDurationInOpenState: '15000'
+        baseConfig: default
 
   retry:
+    configs:
+      default:
+        maxAttempts: '3'
+        waitDuration: '1000'
+        retryExceptions[0]: feign.FeignException$InternalServerError
     instances:
       series:
-        maxAttempts: '3'
-        waitDuration: '1000'
-        retryExceptions[0]: feign.FeignException$InternalServerError
+        baseConfig: default
       movies:
-        maxAttempts: '3'
-        waitDuration: '1000'
-        retryExceptions[0]: feign.FeignException$InternalServerError
+        baseConfig: default
