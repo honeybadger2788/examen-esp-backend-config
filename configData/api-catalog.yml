@@ -29,17 +29,21 @@ eureka:
 resilience4j.circuitbreaker:
   instances:
     catalog:
-      slidingWindowType: COUNT_BASED
-      failureRateThreshold: '40'
-      automaticTransitionFromOpenToHalfOpenEnabled: 'true'
-      allowHealthIndicatorToFail: 'false'
-      registerHealthIndicator: 'true'
-      slidingWindowSize: '10'
-      permittedNumberOfCallsInHalfOpenState: '3'
-      waitDurationInOpenState: '15000'
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowType: TIME_BASED
+      minimumNumberOfCalls: 20
+      waitDurationInOpenState: 50s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
 resilience4j.retry:
   instances:
     catalog:
-      maxAttempts: '3'
-      waitDuration: '1000'
-      retryExceptions[0]: feign.FeignException$InternalServerError
+      maxAttempts: 3
+      waitDuration: 10s
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
+      retryExceptions:
+        - org.springframework.web.client.HttpServerErrorException
+        - java.io.IOException
